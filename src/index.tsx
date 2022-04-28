@@ -111,6 +111,16 @@ const Dice = forwardRef((props: TProps, ref: React.MutableRefObject<TDiceRef>) =
         });
     }, [placementStyles, size, disabled]);
 
+    useEffect(()=>{
+        if(cheatRolling){
+            let diceAudio: HTMLAudioElement;
+            if (sound) {
+                diceAudio = new Audio(sound);
+                diceAudio.play();
+            }
+        }
+    }, [cheatRolling]);
+    
     if (!faceArray?.length) return null;
 
     return (
