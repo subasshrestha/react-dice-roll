@@ -33,7 +33,7 @@ type TDiceRef = {
 };
 
 const Dice = forwardRef((props: TProps, ref: React.MutableRefObject<TDiceRef>) => {
-    const { rollingTime = 1000, onRoll, defaultValue = 6, size = 250, faceBg, faces = [], disabled, cheatValue, placement, sound, triggers = ['click'], cheatRolling = false, cheatFace, ...rest } = props;
+    const { rollingTime = 1000, onRoll, defaultValue = 6, size = 250, faceBg, faces = [], disabled, cheatValue, placement, sound, triggers = ['click'], cheatRolling = false, cheatFace, notSixCount = 0, setNotSixCount, ...rest } = props;
     const [value, setValue] = useState<TValue>(defaultValue);
     const [rolling, setRolling] = useState(false);
     const [faceArray, setFaceArray] = useState<TSingleFace[]>([]);
@@ -48,6 +48,17 @@ const Dice = forwardRef((props: TProps, ref: React.MutableRefObject<TDiceRef>) =
         }
         setRolling(true);
         let rollValue = await randomNumber(1, 6) as TValue;
+        if(setNotSixCount){
+            if(rollValue === 6){
+                setNotSixCount(0);
+            } else {
+                setNotSixCount(notSixCount + 1);
+            }
+            if(notSixCount === 7) {
+                rollValue = 6;
+                setNotSixCount(0);
+            }
+        }
         if (onRoll) onRoll(cheatValue ? cheatValue : rollValue);
         setTimeout(() => {
 

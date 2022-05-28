@@ -12,6 +12,8 @@ export type TProps = React.CSSProperties & {
     triggers?: string[];
     cheatFace?: number;
     cheatRolling?: boolean;
+    notSixCount?: number;
+    setNotSixCount?: (value: number) => void;
 };
 
 export type TValue = 1 | 2 | 3 | 4 | 5 | 6;
